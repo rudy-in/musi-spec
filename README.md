@@ -1,9 +1,27 @@
 # Musi Language Specification (Under development)
 
 ## 1. Introduction
+Musi is a general-purpose programming language designed w/ simplicity, memory-safety and performance in mind. Instead of a garbage collector, issues w/ the memory are prevented by the 'Automatic Reference Counter' (ARC), which tracks reference counts for every appropriate given object in memory. Meaning its like C/C++ but expressed as a scripting language like Bash or Lua but memory safe and designed to be simplified for noobs with performance almost equal to Rust. Since objects are strong references by default
+so they get tracked
+Musi runs code from top to bottom. Unlike many langs, there's no `main()`.
+Instead, bottom-most body in file is main execution point this means that this code:
+```musi
+import "math"
 
-Musi runs code from top to bottom. Unlike many langs, there's no `main()`.  |
-Instead, bottom-most body in file is main execution point:                  |  This is to be replaced soon
+func add(a : Int, b : Int) -> Int := a + b
+
+# main code starts at the bottom
+var name := input("enter your name: ")
+writeln("hello, $name!")
+```
+is read by the compiler as:
+
+```musi
+writeln("hello, $name!")
+var name := input("enter your name: ")
+func add(a : Int, b : Int) -> Int := a + b
+import "math"
+```                
 
 ### 1.1 Hello world
 
@@ -72,10 +90,10 @@ One must use equal spacing for each level.
 
 ```musi
 proc example() :=
-    if condition then
-        do_something()
-    else
-        do_other_thing()
+ |   if condition then
+ |     | do_something()
+ |   else
+ |     | do_other_thing()
 ```
 
 ### 2.3 Operators
@@ -83,7 +101,7 @@ proc example() :=
 | Level | Operators                                          | Description                                 |
 | ----- | -------------------------------------------------- | ------------------------------------------- |
 | 1     | `()`, `.`                                          | Call, member access                         |
-| 2     | `-`, `+`, `not`                                    | Unary negation, plus, logical/bitwise NOT   |
+| 2     | `-`, `+`, `not`                                    | Unary denial, plus, logical/bitwise NOT     |
 | 3     | `^`                                                | Power                                       |
 | 4     | `*`, `/`, `mod`, `rem`                             | Multiplication, division, modulo, remainder |
 | 5     | `+`, `-`                                           | Addition, subtraction                       |
